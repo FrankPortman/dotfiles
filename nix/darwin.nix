@@ -1,4 +1,4 @@
-{ pkgs, user, home, ... }:
+{ user, home, ... }:
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
@@ -8,14 +8,34 @@
   system.primaryUser = user;
   users.users.${user}.home = home;
 
-  # Writes /etc/bashrc and /etc/zshrc so login shells see Nix-installed packages.
-  programs.bash.enable = true;
+  # zsh is already macOS's login shell; this writes /etc/zshrc so it sees Nix packages.
   programs.zsh.enable = true;
 
-  # A current bash to replace macOS's 3.2 as the login shell. After the first switch:
-  #   chsh -s /run/current-system/sw/bin/bash
-  environment.shells = [ pkgs.bashInteractive ];
-  environment.systemPackages = [ pkgs.bashInteractive ];
+  security.pam.services.sudo_local.touchIdAuth = true;
+
+  system.defaults = {
+    NSGlobalDomain = {
+      KeyRepeat = 2;
+      InitialKeyRepeat = 15;
+      ApplePressAndHoldEnabled = false; # key repeat instead of the accent popup
+      AppleShowAllExtensions = true;
+      NSAutomaticSpellingCorrectionEnabled = false;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+    };
+    finder = {
+      AppleShowAllFiles = true;
+      ShowPathbar = true;
+      FXPreferredViewStyle = "Nlsv"; # list view
+      _FXShowPosixPathInTitle = true;
+    };
+    dock = {
+      autohide = true;
+      show-recents = false;
+      mru-spaces = false; # keep Spaces in a fixed order
+    };
+    trackpad.Clicking = true; # tap to click
+  };
 
   system.stateVersion = 6;
 }
