@@ -14,7 +14,7 @@ It installs the Command Line Tools and Determinate Nix, clones this repo to `~/d
 
 | | |
 |---|---|
-| Shell | zsh, starship prompt, autosuggestions, syntax highlighting |
+| Shell | zsh, autosuggestions, syntax highlighting; starship drawing your old bash prompt; `ls` keeps your LSCOLORS |
 | History / jumping | atuin on ctrl-r, zoxide `z`, fzf on ctrl-t / alt-c |
 | CLI | ripgrep, fd, sd, bat (also the man pager), eza, jq, yq, just, watchexec, hyperfine, tokei, dust, duf, btop, tldr |
 | Git | tuned defaults (rebase pulls, zdiff3, histogram diffs, rerere), delta, lazygit, gh, jj |
@@ -22,7 +22,7 @@ It installs the Command Line Tools and Determinate Nix, clones this repo to `~/d
 | Nix | direnv + nix-direnv, `, <cmd>` runs any package without installing |
 | Editor | Helix as `$EDITOR` |
 | AI | Claude Code (native installer, self-updating) |
-| Terminal | iTerm2 profile "Nix": JetBrains Mono Nerd Font, Option as Alt |
+| Terminal | iTerm2 profile "Nix": your old Default profile from `iterm2/profile.json` (colors, Monaco 12), Nerd Font for icon glyphs, Option as Alt |
 | macOS | fast key repeat, no autocorrect, Finder list view + hidden files, autohiding Dock, tap to click, Touch ID for sudo |
 
 ## Day to day

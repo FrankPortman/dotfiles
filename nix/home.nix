@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   user,
   home,
@@ -27,7 +28,7 @@ in
     dust
     duf
     uv
-    nerd-fonts.jetbrains-mono # icons for eza, starship; used by the iTerm2 profile
+    nerd-fonts.jetbrains-mono # icon glyphs; the iTerm2 profile falls back to it
   ];
 
   home.sessionPath = [ "$HOME/.local/bin" ]; # uv tool install
@@ -35,6 +36,9 @@ in
   home.sessionVariables = {
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     MANROFFOPT = "-c";
+    # Same ls colors as the old .bash_profile (`ls` stays /bin/ls).
+    CLICOLOR = "1";
+    LSCOLORS = "GxFxCxDxBxegedabagaced";
   };
 
   # Shell: zsh + starship prompt, atuin history (ctrl-r), zoxide (`z`), fzf (ctrl-t, alt-c).
@@ -51,9 +55,40 @@ in
     };
   };
 
+  # The old bash PS1, same colors: `12:34:56 yikes/fp @dotfiles  (main) $ `
   programs.starship = {
     enable = true;
-    settings.add_newline = false;
+    settings = {
+      add_newline = false;
+      format = "$time $hostname/$username $directory $git_branch \\$ ";
+      time = {
+        disabled = false;
+        time_format = "%T";
+        format = "[$time]($style)";
+        style = "bold red";
+      };
+      hostname = {
+        ssh_only = false;
+        format = "[$hostname]($style)";
+        style = "bold yellow";
+      };
+      username = {
+        show_always = true;
+        format = "[$user]($style)";
+        style_user = "green";
+      };
+      directory = {
+        truncation_length = 1;
+        truncate_to_repo = false;
+        read_only = "";
+        format = "[@$path]($style)";
+        style = "bold white";
+      };
+      git_branch = {
+        format = " [\\($branch\\)]($style)";
+        style = "yellow";
+      };
+    };
   };
 
   programs.atuin = {
@@ -72,7 +107,8 @@ in
   programs.tealdeer.enable = true;
 
   programs.eza = {
-    enable = true; # ls, ll, la, lt aliases
+    enable = true;
+    enableZshIntegration = false; # no ls -> eza aliases
     git = true;
     icons = "auto";
   };
@@ -156,17 +192,22 @@ in
   programs.gh.enable = true;
   programs.lazygit.enable = true;
 
-  # iTerm2 itself is installed by hand. This adds a profile and makes it the default.
+  # iTerm2 itself is installed by hand. This adds your old Default profile (colors,
+  # Monaco 12, all of it, from ../iterm2/profile.json) and makes it the default.
   home.file."Library/Application Support/iTerm2/DynamicProfiles/nix.json".text = builtins.toJSON {
     Profiles = [
-      {
-        Name = "Nix";
-        Guid = itermProfile;
-        "Normal Font" = "JetBrainsMonoNFM-Regular 14";
-        "Option Key Sends" = 2; # left option acts as alt (Esc+): alt-c, alt-b/f
-        "Unlimited Scrollback" = true;
-        "Silence Bell" = true;
-      }
+      (
+        lib.importJSON ../iterm2/profile.json
+        // {
+          Name = "Nix";
+          Guid = itermProfile;
+          "Use Separate Colors for Light and Dark Mode" = false; # use the colors above as-is
+          "Use Non-ASCII Font" = true; # Nerd Font only for icon glyphs
+          "Non Ascii Font" = "JetBrainsMonoNFM-Regular 12";
+          "Option Key Sends" = 2; # left option acts as alt (Esc+): alt-c, alt-b/f
+          "Unlimited Scrollback" = true;
+        }
+      )
     ];
   };
   targets.darwin.defaults."com.googlecode.iterm2"."Default Bookmark Guid" = itermProfile;
