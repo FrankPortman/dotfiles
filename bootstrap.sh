@@ -38,6 +38,9 @@ fi
 
 "/etc/profiles/per-user/$me/bin/mise" install
 
+# Claude Code via its native installer (into ~/.local/bin), so it can update itself.
+[ -x "$HOME/.local/bin/claude" ] || curl -fsSL https://claude.ai/install.sh | bash
+
 echo
 echo "Done. Next:"
 if [ "$(dscl . -read "/Users/$me" UserShell | awk '{print $2}')" != /bin/zsh ]; then

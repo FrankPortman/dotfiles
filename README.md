@@ -21,6 +21,7 @@ It installs the Command Line Tools and Determinate Nix, clones this repo to `~/d
 | Runtimes | mise (node LTS, python 3.14, and whatever a repo pins), uv |
 | Nix | direnv + nix-direnv, `, <cmd>` runs any package without installing |
 | Editor | Helix as `$EDITOR` |
+| AI | Claude Code (native installer, self-updating) |
 | Terminal | iTerm2 profile "Nix": JetBrains Mono Nerd Font, Option as Alt |
 | macOS | fast key repeat, no autocorrect, Finder list view + hidden files, autohiding Dock, tap to click, Touch ID for sudo |
 
