@@ -22,7 +22,7 @@ It installs the Command Line Tools and Determinate Nix, clones this repo to `~/d
 | Nix | direnv + nix-direnv, `, <cmd>` runs any package without installing |
 | Editor | Helix as `$EDITOR` |
 | AI | Claude Code (native installer, self-updating) |
-| Terminal | iTerm2 profile "Nix": your old Default profile from `iterm2/profile.json` (colors, Monaco 12), Nerd Font for icon glyphs, Option as Alt |
+| Terminal | iTerm2 loads all its settings from `iterm2/` (your old profile and colors, Monaco 12), plus Nerd Font for icon glyphs and Option as Alt |
 | macOS | fast key repeat, no autocorrect, Finder list view + hidden files, autohiding Dock, tap to click, Touch ID for sudo |
 
 ## Day to day
@@ -33,5 +33,6 @@ It installs the Command Line Tools and Determinate Nix, clones this repo to `~/d
 - New files must be `git add`ed before switching; flakes only see tracked files.
 - New project with a dev shell: `nix flake init -t ~/dotfiles && direnv allow`
 - Format the Nix files: `nix fmt`
+- iTerm2 settings live in `iterm2/com.googlecode.iterm2.plist`. To keep a change made in iTerm2's Settings, save it there (Settings > General > Settings).
 
 The old, pre-Nix dotfiles are at the `pre-cleanup` tag.

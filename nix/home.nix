@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   user,
   home,
@@ -8,7 +7,6 @@
 let
   name = "Frank Portman";
   email = "frank1214@gmail.com";
-  itermProfile = "DF2DFBFC-FDA2-4B25-83DA-447A49384DF4";
 in
 {
   home.username = user;
@@ -192,23 +190,10 @@ in
   programs.gh.enable = true;
   programs.lazygit.enable = true;
 
-  # iTerm2 itself is installed by hand. This adds your old Default profile (colors,
-  # Monaco 12, all of it, from ../iterm2/profile.json) and makes it the default.
-  home.file."Library/Application Support/iTerm2/DynamicProfiles/nix.json".text = builtins.toJSON {
-    Profiles = [
-      (
-        lib.importJSON ../iterm2/profile.json
-        // {
-          Name = "Nix";
-          Guid = itermProfile;
-          "Use Separate Colors for Light and Dark Mode" = false; # use the colors above as-is
-          "Use Non-ASCII Font" = true; # Nerd Font only for icon glyphs
-          "Non Ascii Font" = "JetBrainsMonoNFM-Regular 12";
-          "Option Key Sends" = 2; # left option acts as alt (Esc+): alt-c, alt-b/f
-          "Unlimited Scrollback" = true;
-        }
-      )
-    ];
+  # iTerm2 itself is installed by hand. It loads all its settings (your profile, colors,
+  # key maps) from ../iterm2/com.googlecode.iterm2.plist at launch.
+  targets.darwin.defaults."com.googlecode.iterm2" = {
+    LoadPrefsFromCustomFolder = true;
+    PrefsCustomFolder = "${home}/dotfiles/iterm2";
   };
-  targets.darwin.defaults."com.googlecode.iterm2"."Default Bookmark Guid" = itermProfile;
 }

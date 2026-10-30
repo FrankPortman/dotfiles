@@ -46,5 +46,5 @@ echo "Done. Next:"
 if [ "$(dscl . -read "/Users/$me" UserShell | awk '{print $2}')" != /bin/zsh ]; then
   echo "  chsh -s /bin/zsh"
 fi
-echo "  Install iTerm2 (https://iterm2.com) and open a new window"
+echo "  Install iTerm2 (https://iterm2.com), or quit and reopen it if it's running"
 echo "  gh auth login"
