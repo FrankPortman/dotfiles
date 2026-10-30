@@ -47,8 +47,8 @@ complete -C aws_completer aws
 # ------------------------------------------------------------------------------
 PS1="$LRED\t $LYELLOW$(scutil --get ComputerName)$NO_COLOUR/$GREEN\u $WHITE@\W$NO_COLOUR $YELLOW\$(parse_git_branch)$NO_COLOUR \\$ "
 # ------------------------------------------------------------------------------
-export PATH="~/.local/bin:$PATH"
-export PATH="~/go/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 # Python Env

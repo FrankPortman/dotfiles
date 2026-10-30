@@ -1,5 +1,3 @@
-export PATH="~/.local/bin:$PATH"
-
-source /Users/frankportman/.docker/init-zsh.sh || true # Added by Docker Desktop
+export PATH="$HOME/.local/bin:$PATH"
 
 . "$HOME/.local/bin/env"
